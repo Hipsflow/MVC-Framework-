@@ -12,6 +12,7 @@
     $dsn = 'pgsql:host=' . $host . ';dbname=' . $dbname;
 
     $pdo = new PDO($dsn, $user, $password);
+    $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
 
     $status = 'Caua';
 
@@ -19,7 +20,11 @@
     $stmt = $pdo->prepare($sql);
     $stmt->execute(['status' => $status]);
     $users = $stmt->fetchAll();
+    foreach($users as $user){
+        echo $user->name, '<br>';
+    }
+    
     ?> 
 
-    <h1><?php print_r ($users); ?></h1>
+
 <?php require APPROOT . '/views/inc/footer.php'; ?>
